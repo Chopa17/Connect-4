@@ -82,7 +82,6 @@ void Gameboard::AIturn() {
 	unsigned int rand_col;
 	unsigned int prob[7] = { 100, 100, 100, 100, 100, 100, 100 };
 	unsigned int total{ 700 };
-	std::cout << "prob: ";
 	//set up probabilities from sums [p(x) = 1*1.08^x.size]
 	for (int i{ 0 }; i < board_width; i++) {
 		prob[i] *= pow(1.08, counters[i].size());
@@ -90,11 +89,7 @@ void Gameboard::AIturn() {
 			if (i != j) { prob[j] /= pow(1.08, counters[i].size()); }
 		}
 	}
-	for (int i{ 0 }; i < board_width; i++) {
-		std::cout << prob[i] << " , ";
-	}
 	total = prob[0] + prob[1] + prob[2] + prob[3] + prob[4] + prob[5] + prob[6];
-	std::cout << std::endl << "total: " << total << std::endl;
 	//loop until random column is valid (not full)
 	do {
 		//generate random number
@@ -102,7 +97,6 @@ void Gameboard::AIturn() {
 			rand_col = rand();
 		} while (rand_col >= (RAND_MAX - RAND_MAX % total));
 		rand_col %= total;
-		std::cout << "	random: " << rand_col << std::endl;
 		//convert to a column number 1-7
 		if (rand_col > prob[0] + prob[1] + prob[2] + prob[3] + prob[4] + prob[5]) { rand_col = 7; } else {
 		if (rand_col > prob[0] + prob[1] + prob[2] + prob[3] + prob[4]) { rand_col = 6; } else {
@@ -111,7 +105,6 @@ void Gameboard::AIturn() {
 		if (rand_col > prob[0] + prob[1]) { rand_col = 3; } else {
 		if (rand_col > prob[0]) { rand_col = 2; } else { rand_col = 1; }}}}}}
 	} while (counters[rand_col - 1].size() == board_height);
-	std::cout << "	col: " << rand_col << std::endl;
 	AddCounter(rand_col);
 }
 //function to add a counter to the board
